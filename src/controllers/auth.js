@@ -4,6 +4,7 @@ import generateCode from "../utils/generateCode.js";
 import generateToken from "../utils/generateToken.js";
 import hashedPassword from "../utils/hashedPassword.js";
 import sendEmail from "../utils/sendEmail.js";
+
 const signUp = async (req, res, next) => {
   try {
     const { name, email, password, role } = req.body;

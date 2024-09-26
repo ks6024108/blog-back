@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import { authRoute } from "./routes/index.js";
+import { authRoute, categoryRoute } from "./routes/index.js";
 import morgan from "morgan";
 import { errorHandler } from "./middlewares/index.js";
 import notFound from "./controllers/notFound.js";
@@ -17,7 +17,7 @@ app.use(morgan("dev"));
 
 //route section
 app.use("/api/v1/auth", authRoute);
-
+app.use("/api/v1/category", categoryRoute);
 //not found route
 app.use("*", notFound);
 
