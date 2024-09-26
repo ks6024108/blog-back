@@ -22,6 +22,9 @@ const userSchema = mongoose.Schema(
       type: Number,
       default: 3,
     },
+    verificationCode: String,
+    forgotPasswordCode: String,
+    isVerified: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
