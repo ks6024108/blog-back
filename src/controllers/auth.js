@@ -3,9 +3,7 @@ import comparePassword from "../utils/comparePassword.js";
 import generateCode from "../utils/generateCode.js";
 import generateToken from "../utils/generateToken.js";
 import hashedPassword from "../utils/hashedPassword.js";
-// import hashedPassword from "../utils/hashedPassword.js";
 import sendEmail from "../utils/sendEmail.js";
-// import bcrypt from "bcryptjs";
 
 const signUp = async (req, res, next) => {
   try {
@@ -148,7 +146,7 @@ const forgotPasswordCode = async (req, res, next) => {
 const recoverPassword = async (req, res, next) => {
   try {
     const { email, code, password } = req.body;
-    const user = User.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) {
       res.code = 404;
       throw new Error("user not found");
@@ -174,10 +172,7 @@ const recoverPassword = async (req, res, next) => {
 const changePassword = async (req, res, next) => {
   try {
     const { oldPassword, newPassword } = req.body;
-    // console.log(oldPassword, newPassword);
-    // console.log("request user", req.user);
     const { _id } = req.user;
-    // console.log("under id:", _id);
     const user = await User.findById(_id);
     if (!user) {
       res.code = 404;
@@ -195,8 +190,6 @@ const changePassword = async (req, res, next) => {
       throw new Error("you are providing old password");
     }
 
-    // const hashPassword = hashedPassword(newPassword);
-    // user.password = hashPassword;
     const hashPassword = await hashedPassword(newPassword); // 10 is the saltRounds
     user.password = hashPassword;
     await user.save();

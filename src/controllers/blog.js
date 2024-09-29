@@ -3,20 +3,19 @@ import { Blog, Category } from "../models/index.js";
 
 const addBlog = async (req, res, next) => {
   try {
-    // console.log(req.file.path)
-    // Upload image to Cloudinary
-    console.log(req.user);
     const { _id } = req.user;
-    console.log("user id:", _id);
     const { title, description, category } = req.body;
 
-    console.log(title, description, category);
-    // const isCategoryExist = await Category.findById(category);
-    // if (!isCategoryExist) {
-    //   res.code = 400;
-    //   throw new Error("category not found");
-    // }
-    console.log("request file:", req.file);
+    const isCategoryExist = await Category.findById(category);
+    if (!isCategoryExist) {
+      res.code = 400;
+      throw new Error("category not found");
+    }
+
+    if (!req.file) {
+      res.code = 400;
+      throw new Error("image is required");
+    }
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: "blog_banners",
     });
@@ -48,14 +47,11 @@ const updateBlog = async (req, res, next) => {
     const { id } = req.params;
     const blog = await Blog.findById(id);
 
-    // console.log(blog);
-    // console.log("requset file:", req.file);
-
-    // const isCategoryExist = await Category.findById(category);
-    // if (!isCategoryExist) {
-    //   res.code = 400;
-    //   throw new Error("Category not found");
-    // }
+    const isCategoryExist = await Category.findById(category);
+    if (!isCategoryExist) {
+      res.code = 400;
+      throw new Error("Category not found");
+    }
 
     if (!blog) {
       res.code = 404;
@@ -65,7 +61,7 @@ const updateBlog = async (req, res, next) => {
 
     if (!req.file) {
       res.code = 404;
-      throw new Error("Blog banner not found");
+      throw new Error("please give new image");
     }
 
     if (req.file) {
@@ -87,7 +83,6 @@ const updateBlog = async (req, res, next) => {
     blog.updatedBy = _id;
 
     await blog.save();
-    // console.log(blog);
     res.status(200).json({
       code: 200,
       status: true,
@@ -103,11 +98,10 @@ const deleteBlog = async (req, res, next) => {
   try {
     const { id } = req.params;
     const blog = await Blog.findById(id);
-    console.log("blog:", blog);
 
     if (!blog) {
       res.code = 404;
-      throw new Error("Post not found");
+      throw new Error("Blog not found");
     }
 
     //delete image also for cloudinary
@@ -117,7 +111,6 @@ const deleteBlog = async (req, res, next) => {
     }
 
     await Blog.findByIdAndDelete(id);
-    console.log(blog);
     res.status(200).json({
       code: 200,
       status: true,
@@ -130,7 +123,7 @@ const deleteBlog = async (req, res, next) => {
 
 const getAllBlogs = async (req, res, next) => {
   try {
-    const { q, size, page, category } = req.query;
+    const { size, page, category, q } = req.query;
     let query = {};
 
     const sizeNumber = parseInt(size) || 10;

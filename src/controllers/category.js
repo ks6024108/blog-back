@@ -53,7 +53,7 @@ const updateCategory = async (req, res, next) => {
       throw new Error("category already exists");
     }
     category.title = title ? title : category.title;
-    category.desc = desc;
+    category.desc = desc ? desc : category.desc;
     category.updatedBy = _id;
     await category.save();
 
@@ -76,7 +76,7 @@ const deleteCategory = async (req, res, next) => {
       res.code = 404;
       throw new Error("Category not found");
     }
-    await Category.finaByIdAndDelete(id);
+    await Category.findByIdAndDelete(id);
     res.status(200).json({
       code: 200,
       status: true,
@@ -89,7 +89,7 @@ const deleteCategory = async (req, res, next) => {
 
 const getCategories = async (req, res, next) => {
   try {
-    const { q, size, page } = req.query;
+    const { size, page, q } = req.query;
     let query = {};
 
     const sizeNumber = parseInt(size) || 10;

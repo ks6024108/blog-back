@@ -1,5 +1,4 @@
 import express from "express";
-// import { authController } from "../controllers/index.js";
 import { authController } from "../controllers/index.js";
 import {
   changePasswordValidator,
@@ -7,7 +6,6 @@ import {
   recoverPasswordValidator,
   signInValidator,
   signUpValidator,
-  updateProfileValidator,
   verifyUserValidator,
 } from "../validators/auth.js";
 import validate from "../validators/validate.js";
@@ -52,12 +50,12 @@ router.put(
   changePasswordValidator,
   validate,
   authController.changePassword
-); //set Authorization  header in postman
+);
 
 router.put(
   "/update-profile",
   isAuth,
-  updateProfileValidator,
+  emailValildator,
   validate,
   authController.updateProfile
 );

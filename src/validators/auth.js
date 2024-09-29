@@ -1,5 +1,4 @@
 import { check } from "express-validator";
-import validateEmail from "./validateEmail.js";
 
 const signUpValidator = [
   check("name").notEmpty().withMessage("Name is Required"),
@@ -72,17 +71,6 @@ const changePasswordValidator = [
     .withMessage("new password is Required"),
 ];
 
-const updateProfileValidator = [
-  check("email").custom(async (email) => {
-    if (email) {
-      const isValidEmail = validateEmail();
-      if (!isValidEmail) {
-        throw "Inavalid email";
-      }
-    }
-  }),
-];
-
 export {
   signUpValidator,
   signInValidator,
@@ -90,5 +78,4 @@ export {
   verifyUserValidator,
   recoverPasswordValidator,
   changePasswordValidator,
-  updateProfileValidator,
 };

@@ -16,9 +16,6 @@ const addBlogValidator = [
 ];
 
 const updateBlogValidator = [
-  // check("title").notEmpty().withMessage("Title is required"),
-  // check("description").notEmpty().withMessage("Description is required"),
-
   check("category").custom(async (category) => {
     if (category && !mongoose.Types.ObjectId.isValid(category)) {
       throw "invalid category id";
@@ -29,9 +26,9 @@ const updateBlogValidator = [
 const idValidator = [
   param("id").custom(async (id) => {
     if (id && !mongoose.Types.ObjectId.isValid(id)) {
-      throw "invalid post id";
+      throw "invalid blog id";
     }
   }),
 ];
 
-export { addBlogValidator, updateBlogValidator,idValidator };
+export { addBlogValidator, updateBlogValidator, idValidator };

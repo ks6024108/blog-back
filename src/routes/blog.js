@@ -1,7 +1,7 @@
 import express from "express";
 import validate from "../validators/validate.js";
 import isAuth from "../middlewares/isAuth.js";
-// import isAdmin from "../middlewares/isAdmin.js";
+import isAdmin from "../middlewares/isAdmin.js";
 
 import upload from "../middlewares/multer.js";
 // import cloudinary from "../config/cloudinary.js";
@@ -19,9 +19,9 @@ router.post(
   "/create",
   upload.single("banner"),
   isAuth,
-  // isAdmin,
-  // addBlogValidator,
-  // validate,
+  isAdmin,
+  addBlogValidator,
+  validate,
   blogController.addBlog
 );
 
@@ -29,17 +29,17 @@ router.put(
   "/update/:id",
   upload.single("banner"),
   isAuth,
-  // isAdmin,
-  // updateBlogValidator,
-  // idValidator,
-  // validate,
+  isAdmin,
+  updateBlogValidator,
+  idValidator,
+  validate,
   blogController.updateBlog
 );
 
 router.delete(
   "/delete/:id",
-  // isAuth,
-  // isAdmin,
+  isAuth,
+  isAdmin,
   idValidator,
   validate,
   blogController.deleteBlog

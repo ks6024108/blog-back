@@ -7,11 +7,11 @@ const blogSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
-      // trim: true,
+      trim: true,
     },
     description: {
       type: String,
-      // required: true,
+      required: true,
     },
     banner: {
       type: String, // URL to the banner image on Cloudinary
@@ -20,12 +20,12 @@ const blogSchema = new mongoose.Schema(
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "category",
-      // required: true,
+      required: true,
     },
     updatedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
-      // required: true,
+      required: true,
     },
   },
   { timestamps: true }
