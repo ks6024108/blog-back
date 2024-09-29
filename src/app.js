@@ -2,11 +2,15 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import { authRoute, categoryRoute } from "./routes/index.js";
+dotenv.config();
+import { authRoute, blogRoute, categoryRoute } from "./routes/index.js";
 import morgan from "morgan";
 import { errorHandler } from "./middlewares/index.js";
 import notFound from "./controllers/notFound.js";
-dotenv.config();
+// import multer from "multer";
+// import { storage } from "./config/cloudinary.js";
+// import path from "path";
+// import upload from "./middlewares/upload.js";
 
 const app = express();
 
@@ -18,6 +22,9 @@ app.use(morgan("dev"));
 //route section
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/category", categoryRoute);
+
+app.use("/api/v1/blog", blogRoute);
+
 //not found route
 app.use("*", notFound);
 

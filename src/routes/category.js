@@ -1,6 +1,6 @@
 import express from "express";
-import { categoryController } from "../controllers";
-import { addCategoryValidator, idValidator } from "../validators/category";
+import { categoryController } from "../controllers/index.js";
+import { addCategoryValidator, idValidator } from "../validators/category.js";
 import validate from "../validators/validate.js";
 import isAuth from "../middlewares/isAuth.js";
 import isAdmin from "../middlewares/isAdmin.js";
@@ -34,11 +34,14 @@ router.delete(
   categoryController.deleteCategory
 );
 
-
-
 router.get("/", isAuth, categoryController.getCategories);
 
-router.get("/:id", isAuth,idValidator,validate, categoryController.getCategory);
-
+router.get(
+  "/:id",
+  isAuth,
+  idValidator,
+  validate,
+  categoryController.getCategory
+);
 
 export default router;

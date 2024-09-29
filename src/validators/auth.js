@@ -1,5 +1,5 @@
 import { check } from "express-validator";
-import validateEmail from "./validateEmail";
+import validateEmail from "./validateEmail.js";
 
 const signUpValidator = [
   check("name").notEmpty().withMessage("Name is Required"),
@@ -90,5 +90,5 @@ export {
   verifyUserValidator,
   recoverPasswordValidator,
   changePasswordValidator,
-  updateProfileValidator
+  updateProfileValidator,
 };

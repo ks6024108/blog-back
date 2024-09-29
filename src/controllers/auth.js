@@ -1,9 +1,11 @@
-import { User } from "../models/index.js";
+import User from "../models/user.js";
 import comparePassword from "../utils/comparePassword.js";
 import generateCode from "../utils/generateCode.js";
 import generateToken from "../utils/generateToken.js";
 import hashedPassword from "../utils/hashedPassword.js";
+// import hashedPassword from "../utils/hashedPassword.js";
 import sendEmail from "../utils/sendEmail.js";
+// import bcrypt from "bcryptjs";
 
 const signUp = async (req, res, next) => {
   try {
@@ -172,13 +174,17 @@ const recoverPassword = async (req, res, next) => {
 const changePassword = async (req, res, next) => {
   try {
     const { oldPassword, newPassword } = req.body;
+    // console.log(oldPassword, newPassword);
+    // console.log("request user", req.user);
     const { _id } = req.user;
-    const user = User.findById(_id);
+    // console.log("under id:", _id);
+    const user = await User.findById(_id);
     if (!user) {
       res.code = 404;
       throw new Error("user not found");
     }
-    const match = await comparePassword(oldPassword.user.password);
+    console.log("user::", user.password, " oldpass ", oldPassword);
+    const match = await comparePassword(oldPassword, user.password);
     if (!match) {
       res.code = 400;
       throw new Error("old password does not match");
@@ -189,8 +195,10 @@ const changePassword = async (req, res, next) => {
       throw new Error("you are providing old password");
     }
 
-    const hashedPassword = hashedPassword(newPassword);
-    user.password = hashedPassword;
+    // const hashPassword = hashedPassword(newPassword);
+    // user.password = hashPassword;
+    const hashPassword = await hashedPassword(newPassword); // 10 is the saltRounds
+    user.password = hashPassword;
     await user.save();
 
     res.status(200).json({

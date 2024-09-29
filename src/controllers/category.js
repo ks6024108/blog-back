@@ -1,4 +1,4 @@
-import { Category, User } from "../models";
+import { Category, User } from "../models/index.js";
 
 const addCategory = async (req, res, next) => {
   try {

@@ -1,5 +1,5 @@
 const notFound = (req, res, next) => {
-  res.status(404).json({code:404,status:false,message:'api not found'})
-}
+  res.status(404).json({ code: 404, status: false, message: "api not found" });
+};
 
-export default notFound
+export default notFound;
