@@ -59,5 +59,6 @@ router.put(
   validate,
   authController.updateProfile
 );
+router.get("/current-user", isAuth, authController.currentUser);
 
 export default router;

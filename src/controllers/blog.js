@@ -12,6 +12,8 @@ const addBlog = async (req, res, next) => {
       throw new Error("category not found");
     }
 
+    // const catByUser = await Blog.find({ _id });
+
     if (!req.file) {
       res.code = 400;
       throw new Error("image is required");
@@ -34,7 +36,7 @@ const addBlog = async (req, res, next) => {
       code: 201,
       status: true,
       message: "blog posted successfully",
-      data: newBlog,
+      data: { newBlog },
     });
   } catch (error) {
     next(error);

@@ -44,14 +44,14 @@ const signin = async (req, res, next) => {
       res.code = 401;
       throw new Error("invalid credentials");
     }
-
+    user.password = undefined;
     const token = generateToken(user);
 
     res.status(200).json({
       code: 200,
       status: true,
       message: "user signin successful",
-      data: { token },
+      data: { token, user },
     });
   } catch (error) {
     next(error);
@@ -247,6 +247,28 @@ const updateProfile = async (req, res, next) => {
   }
 };
 
+const currentUser = async (req, res, next) => {
+  try {
+    const { _id } = req.user;
+    const user = await User.findById(_id).select(
+      "-password -verificationCode -forgotPasswordCode"
+    );
+
+    if (!user) {
+      res.code = 404;
+      throw new Error("User not Found");
+    }
+    res.status(200).json({
+      code: 200,
+      status: true,
+      message: "get current User successfully",
+      data: { user },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   signUp,
   signin,
@@ -256,4 +278,5 @@ export default {
   recoverPassword,
   changePassword,
   updateProfile,
+  currentUser,
 };

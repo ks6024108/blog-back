@@ -14,9 +14,14 @@ import notFound from "./controllers/notFound.js";
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 app.use(express.json());
 app.use(bodyParser.urlencoded({ limit: "500mb", extended: true }));
-app.use(cors());
+
 app.use(morgan("dev"));
 
 //route section
