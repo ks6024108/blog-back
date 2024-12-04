@@ -18,7 +18,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://bloggy-5xvkquphb-ks6024108s-projects.vercel.app",
+      "https://bloggy-mmrt72f6x-ks6024108s-projects.vercel.app",
     ],
   })
 );
