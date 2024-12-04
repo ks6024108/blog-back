@@ -14,14 +14,7 @@ import notFound from "./controllers/notFound.js";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://bloggy-mmrt72f6x-ks6024108s-projects.vercel.app",
-    ],
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ limit: "500mb", extended: true }));
 
