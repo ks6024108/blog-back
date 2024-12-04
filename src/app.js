@@ -16,7 +16,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://bloggy-5xvkquphb-ks6024108s-projects.vercel.app",
+    ],
   })
 );
 app.use(express.json());
